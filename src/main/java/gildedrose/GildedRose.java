@@ -15,8 +15,8 @@ class GildedRose {
                 continue;
             }
 
-            if (!currentItem.name.equals("Aged Brie")
-                    && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (!isAgedBrie(currentItem)
+                    && !isBackstagePass(currentItem)) {
                 decreaseQuality(currentItem);
             } else {
                 increaseQuality(currentItem);
@@ -35,7 +35,7 @@ class GildedRose {
             currentItem.sellIn = currentItem.sellIn - 1;
 
             if (currentItem.sellIn < 0) {
-                if (!currentItem.name.equals("Aged Brie")) {
+                if (!isAgedBrie(currentItem)) {
                     if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         decreaseQuality(currentItem);
                     } else {
@@ -46,6 +46,14 @@ class GildedRose {
                 }
             }
         }
+    }
+
+    private boolean isBackstagePass(Item currentItem) {
+        return currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private boolean isAgedBrie(Item currentItem) {
+        return currentItem.name.equals("Aged Brie");
     }
 
     private void decreaseQuality(Item currentItem) {
