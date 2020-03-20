@@ -11,12 +11,14 @@ class GildedRose {
         for (int i = 0; i < items.length; i++) {
             Item currentItem = items[i];
 
+            if (!isNotSulfuras(currentItem)) {
+                continue;
+            }
+
             if (!currentItem.name.equals("Aged Brie")
                     && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 if (currentItem.quality > 0) {
-                    if (isNotSulfuras(currentItem)) {
-                        currentItem.quality = currentItem.quality - 1;
-                    }
+                    currentItem.quality = currentItem.quality - 1;
                 }
             } else {
                 if (currentItem.quality < 50) {
@@ -34,17 +36,13 @@ class GildedRose {
                 }
             }
 
-            if (isNotSulfuras(currentItem)) {
-                currentItem.sellIn = currentItem.sellIn - 1;
-            }
+            currentItem.sellIn = currentItem.sellIn - 1;
 
             if (currentItem.sellIn < 0) {
                 if (!currentItem.name.equals("Aged Brie")) {
                     if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                         if (currentItem.quality > 0) {
-                            if (isNotSulfuras(currentItem)) {
-                                currentItem.quality = currentItem.quality - 1;
-                            }
+                            currentItem.quality = currentItem.quality - 1;
                         }
                     } else {
                         currentItem.quality = currentItem.quality - currentItem.quality;
