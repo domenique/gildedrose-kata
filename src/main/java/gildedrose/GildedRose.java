@@ -11,7 +11,7 @@ class GildedRose {
         for (int i = 0; i < items.length; i++) {
             Item currentItem = items[i];
 
-            if (!isNotSulfuras(currentItem)) {
+            if (isSulfuras(currentItem)) {
                 continue;
             }
 
@@ -54,8 +54,8 @@ class GildedRose {
         }
     }
 
-    private boolean isNotSulfuras(Item currentItem) {
-        return !currentItem.name.equals("Sulfuras, Hand of Ragnaros");
+    private boolean isSulfuras(Item currentItem) {
+        return currentItem.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     private void increaseQuality(Item currentItem) {
