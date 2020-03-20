@@ -19,19 +19,17 @@ class GildedRose {
                     && !currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
                 decreaseQuality(currentItem);
             } else {
-                if (currentItem.quality < 50) {
-                    currentItem.quality = currentItem.quality + 1;
+                increaseQuality(currentItem);
+                if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                    if (currentItem.sellIn < 11) {
+                        increaseQuality(currentItem);
+                    }
 
-                    if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (currentItem.sellIn < 11) {
-                            increaseQuality(currentItem);
-                        }
-
-                        if (currentItem.sellIn < 6) {
-                            increaseQuality(currentItem);
-                        }
+                    if (currentItem.sellIn < 6) {
+                        increaseQuality(currentItem);
                     }
                 }
+
             }
 
             currentItem.sellIn = currentItem.sellIn - 1;
