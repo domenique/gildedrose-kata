@@ -39,12 +39,10 @@ class GildedRose {
         if (currentItem.sellIn < 0) {
             if (isAgedBrie(currentItem)) {
                 increaseQuality(currentItem);
+            } else if (isBackstagePass(currentItem)) {
+                resetQuality(currentItem);
             } else {
-                if (isBackstagePass(currentItem)) {
-                    resetQuality(currentItem);
-                } else {
-                    decreaseQuality(currentItem);
-                }
+                decreaseQuality(currentItem);
             }
         }
     }
