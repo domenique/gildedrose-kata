@@ -1,5 +1,7 @@
 package gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
     Item[] items;
 
@@ -8,42 +10,43 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (var i = 0; i < items.length; i++) {
-            var currentItem = items[i];
+        Arrays.stream(items)
+                .forEach(this::handleItem);
+    }
 
-            if (isSulfuras(currentItem)) {
-                continue;
-            }
+    private void handleItem(Item currentItem) {
+        if (isSulfuras(currentItem)) {
+            return;
+        }
 
-            if (!isAgedBrie(currentItem)
-                    && !isBackstagePass(currentItem)) {
-                decreaseQuality(currentItem);
-            } else {
-                increaseQuality(currentItem);
-                if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (currentItem.sellIn < 11) {
-                        increaseQuality(currentItem);
-                    }
-
-                    if (currentItem.sellIn < 6) {
-                        increaseQuality(currentItem);
-                    }
-                }
-
-            }
-
-            currentItem.sellIn = currentItem.sellIn - 1;
-
-            if (currentItem.sellIn < 0) {
-                if (!isAgedBrie(currentItem)) {
-                    if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        decreaseQuality(currentItem);
-                    } else {
-                        currentItem.quality = currentItem.quality - currentItem.quality;
-                    }
-                } else {
+        if (!isAgedBrie(currentItem)
+                && !isBackstagePass(currentItem)) {
+            decreaseQuality(currentItem);
+        } else {
+            increaseQuality(currentItem);
+            if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (currentItem.sellIn < 11) {
                     increaseQuality(currentItem);
                 }
+
+                if (currentItem.sellIn < 6) {
+                    increaseQuality(currentItem);
+                }
+            }
+
+        }
+
+        currentItem.sellIn = currentItem.sellIn - 1;
+
+        if (currentItem.sellIn < 0) {
+            if (!isAgedBrie(currentItem)) {
+                if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                    decreaseQuality(currentItem);
+                } else {
+                    currentItem.quality = currentItem.quality - currentItem.quality;
+                }
+            } else {
+                increaseQuality(currentItem);
             }
         }
     }
