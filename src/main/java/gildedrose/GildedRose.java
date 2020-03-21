@@ -24,7 +24,7 @@ class GildedRose {
             decreaseQuality(currentItem);
         } else {
             increaseQuality(currentItem);
-            if (currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (isBackstagePass(currentItem)) {
                 if (currentItem.sellIn < 11) {
                     increaseQuality(currentItem);
                 }
@@ -40,7 +40,7 @@ class GildedRose {
 
         if (currentItem.sellIn < 0) {
             if (!isAgedBrie(currentItem)) {
-                if (!currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                if (!isBackstagePass(currentItem)) {
                     decreaseQuality(currentItem);
                 } else {
                     currentItem.quality = currentItem.quality - currentItem.quality;
