@@ -45,10 +45,6 @@ class GildedRose {
         return currentItem.name.equals("Conjured Mana Cake");
     }
 
-    private void resetQuality(Item currentItem) {
-        currentItem.quality = 0;
-    }
-
     private boolean isBackstagePass(Item currentItem) {
         return currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert");
     }
@@ -57,19 +53,19 @@ class GildedRose {
         return currentItem.name.equals("Aged Brie");
     }
 
-    private void decreaseQuality(Item currentItem) {
-        if (currentItem.quality > 0) {
-            currentItem.quality = currentItem.quality - 1;
-        }
-    }
-
     private boolean isSulfuras(Item currentItem) {
         return currentItem.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
     private void increaseQuality(Item currentItem) {
-        if (currentItem.quality < 50) {
-            currentItem.quality = currentItem.quality + 1;
-        }
+        currentItem.quality = Math.min(50, currentItem.quality + 1);
+    }
+
+    private void decreaseQuality(Item currentItem) {
+        currentItem.quality = Math.max(0, currentItem.quality - 1);
+    }
+
+    private void resetQuality(Item currentItem) {
+        currentItem.quality = 0;
     }
 }
