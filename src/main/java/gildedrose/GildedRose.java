@@ -19,10 +19,7 @@ class GildedRose {
             return;
         }
 
-        if (!isAgedBrie(currentItem)
-                && !isBackstagePass(currentItem)) {
-            decreaseQuality(currentItem);
-        } else {
+        if (isAgedBrie(currentItem) || isBackstagePass(currentItem)) {
             increaseQuality(currentItem);
             if (isBackstagePass(currentItem)) {
                 if (currentItem.sellIn < 11) {
@@ -33,20 +30,21 @@ class GildedRose {
                     increaseQuality(currentItem);
                 }
             }
-
+        } else {
+            decreaseQuality(currentItem);
         }
 
         currentItem.sellIn = currentItem.sellIn - 1;
 
         if (currentItem.sellIn < 0) {
-            if (!isAgedBrie(currentItem)) {
-                if (!isBackstagePass(currentItem)) {
-                    decreaseQuality(currentItem);
-                } else {
-                    currentItem.quality = 0;
-                }
-            } else {
+            if (isAgedBrie(currentItem)) {
                 increaseQuality(currentItem);
+            } else {
+                if (isBackstagePass(currentItem)) {
+                    currentItem.quality = 0;
+                } else {
+                    decreaseQuality(currentItem);
+                }
             }
         }
     }
