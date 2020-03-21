@@ -36,15 +36,14 @@ class GildedRose {
 
         currentItem.sellIn = currentItem.sellIn - 1;
 
-        if (currentItem.sellIn < 0) {
-            if (isAgedBrie(currentItem)) {
-                increaseQuality(currentItem);
-            } else if (isBackstagePass(currentItem)) {
-                resetQuality(currentItem);
-            } else {
-                decreaseQuality(currentItem);
-            }
+        if (isAgedBrie(currentItem)) {
+            if (currentItem.sellIn < 0) increaseQuality(currentItem);
+        } else if (isBackstagePass(currentItem)) {
+            if (currentItem.sellIn < 0) resetQuality(currentItem);
+        } else {
+            if (currentItem.sellIn < 0) decreaseQuality(currentItem);
         }
+
     }
 
     private void resetQuality(Item currentItem) {
