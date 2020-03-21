@@ -28,10 +28,21 @@ class GildedRose {
             if (currentItem.sellIn < 10) increaseQuality(currentItem);
             if (currentItem.sellIn < 5) increaseQuality(currentItem);
             if (currentItem.sellIn < 0) resetQuality(currentItem);
+        } else if (isConjured(currentItem)) {
+            decreaseQuality(currentItem);
+            decreaseQuality(currentItem);
+            if (currentItem.sellIn < 0) {
+                decreaseQuality(currentItem);
+                decreaseQuality(currentItem);
+            }
         } else {
             decreaseQuality(currentItem);
             if (currentItem.sellIn < 0) decreaseQuality(currentItem);
         }
+    }
+
+    private boolean isConjured(Item currentItem) {
+        return currentItem.name.equals("Conjured Mana Cake");
     }
 
     private void resetQuality(Item currentItem) {
