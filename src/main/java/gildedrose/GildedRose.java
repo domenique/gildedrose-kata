@@ -41,12 +41,16 @@ class GildedRose {
                 increaseQuality(currentItem);
             } else {
                 if (isBackstagePass(currentItem)) {
-                    currentItem.quality = 0;
+                    resetQuality(currentItem);
                 } else {
                     decreaseQuality(currentItem);
                 }
             }
         }
+    }
+
+    private void resetQuality(Item currentItem) {
+        currentItem.quality = 0;
     }
 
     private boolean isBackstagePass(Item currentItem) {
