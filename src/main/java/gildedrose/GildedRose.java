@@ -43,7 +43,7 @@ class GildedRose {
                 if (!isBackstagePass(currentItem)) {
                     decreaseQuality(currentItem);
                 } else {
-                    currentItem.quality = currentItem.quality - currentItem.quality;
+                    currentItem.quality = 0;
                 }
             } else {
                 increaseQuality(currentItem);
