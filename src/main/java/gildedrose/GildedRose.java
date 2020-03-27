@@ -21,24 +21,40 @@ class GildedRose {
         currentItem.sellIn = currentItem.sellIn - 1;
 
         if (isAgedBrie(currentItem)) {
-            increaseQuality(currentItem);
-            if (currentItem.sellIn < 0) increaseQuality(currentItem);
+            handleAgedBrie(currentItem);
         } else if (isBackstagePass(currentItem)) {
-            increaseQuality(currentItem);
-            if (currentItem.sellIn < 10) increaseQuality(currentItem);
-            if (currentItem.sellIn < 5) increaseQuality(currentItem);
-            if (currentItem.sellIn < 0) resetQuality(currentItem);
+            handleBackstagePass(currentItem);
         } else if (isConjured(currentItem)) {
-            decreaseQuality(currentItem);
-            decreaseQuality(currentItem);
-            if (currentItem.sellIn < 0) {
-                decreaseQuality(currentItem);
-                decreaseQuality(currentItem);
-            }
+            handleConjuredItem(currentItem);
         } else {
-            decreaseQuality(currentItem);
-            if (currentItem.sellIn < 0) decreaseQuality(currentItem);
+            handleDefaultItem(currentItem);
         }
+    }
+
+    private void handleDefaultItem(Item currentItem) {
+        decreaseQuality(currentItem);
+        if (currentItem.sellIn < 0) decreaseQuality(currentItem);
+    }
+
+    private void handleConjuredItem(Item currentItem) {
+        decreaseQuality(currentItem);
+        decreaseQuality(currentItem);
+        if (currentItem.sellIn < 0) {
+            decreaseQuality(currentItem);
+            decreaseQuality(currentItem);
+        }
+    }
+
+    private void handleBackstagePass(Item currentItem) {
+        increaseQuality(currentItem);
+        if (currentItem.sellIn < 10) increaseQuality(currentItem);
+        if (currentItem.sellIn < 5) increaseQuality(currentItem);
+        if (currentItem.sellIn < 0) resetQuality(currentItem);
+    }
+
+    private void handleAgedBrie(Item currentItem) {
+        increaseQuality(currentItem);
+        if (currentItem.sellIn < 0) increaseQuality(currentItem);
     }
 
     private boolean isConjured(Item currentItem) {
