@@ -5,14 +5,15 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 13
+sourceCompatibility = 17
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
+    testImplementation('org.junit.jupiter:junit-jupiter:5.9.1')
+    testImplementation("com.approvaltests:approvaltests:18.5.0")
     testImplementation('org.assertj:assertj-core:3.15.0')
 }
 

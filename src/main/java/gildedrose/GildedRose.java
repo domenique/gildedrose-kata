@@ -1,7 +1,5 @@
 package gildedrose;
 
-import java.util.Arrays;
-
 class GildedRose {
     Item[] items;
 
@@ -10,78 +8,64 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        Arrays.stream(items)
-                .forEach(this::handleItem);
-    }
-
-    private void handleItem(Item currentItem) {
-        if (isSulfuras(currentItem)) {
-            return;
-        }
-        currentItem.sellIn = currentItem.sellIn - 1;
-
-        if (isAgedBrie(currentItem)) {
-            handleAgedBrie(currentItem);
-        } else if (isBackstagePass(currentItem)) {
-            handleBackstagePass(currentItem);
-        } else if (isConjured(currentItem)) {
-            handleConjuredItem(currentItem);
-        } else {
-            handleDefaultItem(currentItem);
+        for (int i = 0; i < items.length; i++) {
+            var item = items[i];
+            doStuff(item);
         }
     }
 
-    private void handleDefaultItem(Item currentItem) {
-        decreaseQuality(currentItem);
-        if (currentItem.sellIn < 0) decreaseQuality(currentItem);
-    }
+    private void doStuff(Item item) {
+        switch (item.name) {
+            case "Sulfuras, Hand of Ragnaros":
+                break;
+            case "Aged Brie":
+                item.sellIn = item.sellIn - 1;
 
-    private void handleConjuredItem(Item currentItem) {
-        decreaseQuality(currentItem);
-        decreaseQuality(currentItem);
-        if (currentItem.sellIn < 0) {
-            decreaseQuality(currentItem);
-            decreaseQuality(currentItem);
+                increase(item);
+                if (item.sellIn < 0) {
+                    increase(item);
+                }
+                break;
+            case "Backstage passes to a TAFKAL80ETC concert":
+                item.sellIn = item.sellIn - 1;
+
+                if (item.quality < 50) {
+                    item.quality = item.quality + 1;
+                    if (item.sellIn < 11) {
+                        increase(item);
+                    }
+                    if (item.sellIn < 6) {
+                        increase(item);
+                    }
+                }
+
+                if (item.sellIn < 0) {
+                    item.quality = 0;
+                }
+                break;
+            default:
+                item.sellIn = item.sellIn - 1;
+
+                decrease(item);
+                if (item.sellIn < 0) {
+                    decrease(item);
+                }
+                break;
         }
     }
 
-    private void handleBackstagePass(Item currentItem) {
-        increaseQuality(currentItem);
-        if (currentItem.sellIn < 10) increaseQuality(currentItem);
-        if (currentItem.sellIn < 5) increaseQuality(currentItem);
-        if (currentItem.sellIn < 0) resetQuality(currentItem);
+    private void decrease(Item item) {
+        if (item.quality > 0) {
+            item.quality = item.quality - 1;
+        }
     }
 
-    private void handleAgedBrie(Item currentItem) {
-        increaseQuality(currentItem);
-        if (currentItem.sellIn < 0) increaseQuality(currentItem);
-    }
-
-    private boolean isConjured(Item currentItem) {
-        return currentItem.name.equals("Conjured Mana Cake");
-    }
-
-    private boolean isBackstagePass(Item currentItem) {
-        return currentItem.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    private boolean isAgedBrie(Item currentItem) {
-        return currentItem.name.equals("Aged Brie");
-    }
-
-    private boolean isSulfuras(Item currentItem) {
-        return currentItem.name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    private void increaseQuality(Item currentItem) {
-        currentItem.quality = Math.min(50, currentItem.quality + 1);
-    }
-
-    private void decreaseQuality(Item currentItem) {
-        currentItem.quality = Math.max(0, currentItem.quality - 1);
-    }
-
-    private void resetQuality(Item currentItem) {
-        currentItem.quality = 0;
+    private void increase(Item item) {
+        if (item.quality < 50) {
+            item.quality = item.quality + 1;
+        }
     }
 }
+
+
+
