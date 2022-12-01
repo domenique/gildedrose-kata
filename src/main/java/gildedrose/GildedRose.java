@@ -1,5 +1,9 @@
 package gildedrose;
 
+import java.util.Arrays;
+
+import static java.util.function.Predicate.not;
+
 class GildedRose {
     Item[] items;
 
@@ -8,64 +12,49 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            var item = items[i];
-            doStuff(item);
+        Arrays.stream(items)
+                .filter(not(this::isSulfuras))
+                .forEach(this::handleItem);
+    }
+
+    private void handleItem(Item currentItem) {
+        currentItem.sellIn = currentItem.sellIn - 1;
+        switch (currentItem.name) {
+            case "Aged Brie" -> {
+                increaseQuality(currentItem);
+                if (currentItem.sellIn < 0) increaseQuality(currentItem);
+            }
+            case "Backstage passes to a TAFKAL80ETC concert" -> {
+                increaseQuality(currentItem);
+                if (currentItem.sellIn < 10) increaseQuality(currentItem);
+                if (currentItem.sellIn < 5) increaseQuality(currentItem);
+                if (currentItem.sellIn < 0) resetQuality(currentItem);
+            }
+//            case "Conjured Mana Cake" -> {
+//                decreaseQuality(currentItem);
+//                decreaseQuality(currentItem);
+//                if (currentItem.sellIn < 0) resetQuality(currentItem);
+//            }
+            default -> {
+                decreaseQuality(currentItem);
+                if (currentItem.sellIn < 0) decreaseQuality(currentItem);
+            }
         }
     }
 
-    private void doStuff(Item item) {
-        switch (item.name) {
-            case "Sulfuras, Hand of Ragnaros":
-                break;
-            case "Aged Brie":
-                item.sellIn = item.sellIn - 1;
-
-                increase(item);
-                if (item.sellIn < 0) {
-                    increase(item);
-                }
-                break;
-            case "Backstage passes to a TAFKAL80ETC concert":
-                item.sellIn = item.sellIn - 1;
-
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-                    if (item.sellIn < 11) {
-                        increase(item);
-                    }
-                    if (item.sellIn < 6) {
-                        increase(item);
-                    }
-                }
-
-                if (item.sellIn < 0) {
-                    item.quality = 0;
-                }
-                break;
-            default:
-                item.sellIn = item.sellIn - 1;
-
-                decrease(item);
-                if (item.sellIn < 0) {
-                    decrease(item);
-                }
-                break;
-        }
+    private boolean isSulfuras(Item currentItem) {
+        return currentItem.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
-    private void decrease(Item item) {
-        if (item.quality > 0) {
-            item.quality = item.quality - 1;
-        }
+    private void increaseQuality(Item currentItem) {
+        currentItem.quality = Math.min(50, currentItem.quality + 1);
     }
 
-    private void increase(Item item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
+    private void decreaseQuality(Item currentItem) {
+        currentItem.quality = Math.max(0, currentItem.quality - 1);
+    }
+
+    private void resetQuality(Item currentItem) {
+        currentItem.quality = 0;
     }
 }
-
-
-
