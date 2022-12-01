@@ -9,7 +9,7 @@ class ApprovalTest {
     @Test
     void approvalTest() {
         String[] names = {"foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros", "Conjured Mana Cake"};
-        Integer[] sellIns = {0, 1, 2, 3, 4, 10};
+        Integer[] sellIns = {0, 1, 2, 3, 4, 5, 6, 10};
         Integer[] qualities = {0, 1, 2, 3, 10, 20};
         CombinationApprovals.verifyAllCombinations(this::runIt, names, sellIns, qualities);
     }

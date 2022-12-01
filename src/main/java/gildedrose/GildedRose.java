@@ -30,11 +30,12 @@ class GildedRose {
                 if (currentItem.sellIn < 5) increaseQuality(currentItem);
                 if (currentItem.sellIn < 0) resetQuality(currentItem);
             }
-//            case "Conjured Mana Cake" -> {
-//                decreaseQuality(currentItem);
-//                decreaseQuality(currentItem);
-//                if (currentItem.sellIn < 0) resetQuality(currentItem);
-//            }
+            case "Conjured Mana Cake" -> {
+                decreaseQuality(currentItem);
+                decreaseQuality(currentItem);
+                if (currentItem.sellIn < 0) decreaseQuality(currentItem);
+                if (currentItem.sellIn < 0) decreaseQuality(currentItem);
+            }
             default -> {
                 decreaseQuality(currentItem);
                 if (currentItem.sellIn < 0) decreaseQuality(currentItem);
